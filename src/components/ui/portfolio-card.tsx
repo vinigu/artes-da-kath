@@ -70,7 +70,7 @@ export function PortfolioCard({ categoryLabel, item }: PortfolioCardProps) {
               type="button"
               onClick={showNextImage}
               disabled={totalImages <= 1}
-              aria-label={`Mostrar proxima foto de ${item.title}`}
+              aria-label={`Mostrar próxima foto de ${item.title}`}
               className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-[color:var(--brand-brown)] shadow-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
             >
               <ChevronRight size={16} />

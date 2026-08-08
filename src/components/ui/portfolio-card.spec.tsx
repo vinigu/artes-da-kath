@@ -23,9 +23,9 @@ describe("PortfolioCard", () => {
         categoryLabel="Bordados"
         item={{
           id: "item-1",
-          title: "Colecao Casal",
-          description: "Descricao",
-          imageAlt: "Bordados da colecao casal",
+          title: "Coleção Casal",
+          description: "Descrição",
+          imageAlt: "Bordados da coleção casal",
           images: [
             "/portfolio/bordados/casal/bordado-casal-1.png",
             "/portfolio/bordados/casal/bordado-casal-2.png",
@@ -36,7 +36,7 @@ describe("PortfolioCard", () => {
     );
 
     const image = screen.getByRole("img", {
-      name: /bordados da colecao casal/i,
+      name: /bordados da coleção casal/i,
     });
 
     expect(image).toHaveAttribute(
@@ -46,7 +46,9 @@ describe("PortfolioCard", () => {
     expect(screen.getByText("1/3")).toBeInTheDocument();
 
     fireEvent.click(
-      screen.getByRole("button", { name: /mostrar proxima foto de colecao casal/i }),
+      screen.getByRole("button", {
+        name: /mostrar próxima foto de coleção casal/i,
+      }),
     );
 
     expect(image).toHaveAttribute(
@@ -56,7 +58,9 @@ describe("PortfolioCard", () => {
     expect(screen.getByText("2/3")).toBeInTheDocument();
 
     fireEvent.click(
-      screen.getByRole("button", { name: /mostrar foto anterior de colecao casal/i }),
+      screen.getByRole("button", {
+        name: /mostrar foto anterior de coleção casal/i,
+      }),
     );
 
     expect(image).toHaveAttribute(

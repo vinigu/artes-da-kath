@@ -27,14 +27,14 @@ export const portfolioCatalog: PortfolioCatalog = {
     id: "bordados",
     label: "Bordados",
     summary:
-      "Trabalhos bordados com texturas marcantes e paleta suave. Cada peça e pensada para transmitir carinho, presenca e delicadeza.",
+      "Trabalhos bordados com texturas marcantes e paleta suave. Cada peça é pensada para transmitir carinho, presença e delicadeza.",
     items: [
       {
         id: "bordado-casal",
-        title: "Colecao Casal",
+        title: "Coleção Casal",
         description:
-          "Serie romantica em tons terrosos, com composicoes delicadas para decorar e presentear.",
-        imageAlt: "Bordados da colecao casal com composicao romantica",
+          "Série romântica em tons terrosos, com composições delicadas para decorar e presentear.",
+        imageAlt: "Bordados da coleção Casal com composição romântica",
         images: [
           "/portfolio/bordados/casal/bordado-casal-1.png",
           "/portfolio/bordados/casal/bordado-casal-2.png",
@@ -47,7 +47,7 @@ export const portfolioCatalog: PortfolioCatalog = {
         id: "bordado-isaac",
         title: "Linha Isaac",
         description:
-          "Pecas infantis personalizadas para quarto de bebe, com letras e detalhes suaves.",
+          "Peças infantis personalizadas para quarto de bebê, com letras e detalhes suaves.",
         imageAlt: "Bordados infantis personalizados da linha Isaac",
         images: [
           "/portfolio/bordados/isaac/bordado-isaac-1.png",
@@ -58,10 +58,10 @@ export const portfolioCatalog: PortfolioCatalog = {
       },
       {
         id: "bordado-paz",
-        title: "Serie Paz em Linhas",
+        title: "Série Paz em Linhas",
         description:
-          "Composicoes leves com mensagem serena para ambientes de descanso e acolhimento.",
-        imageAlt: "Bordados da serie Paz em Linhas com detalhes florais",
+          "Composições leves com mensagem serena para ambientes de descanso e acolhimento.",
+        imageAlt: "Bordados da série Paz em Linhas com detalhes florais",
         images: [
           "/portfolio/bordados/paz/bordado-paz-1.png",
           "/portfolio/bordados/paz/bordado-paz-2.png",
@@ -72,10 +72,10 @@ export const portfolioCatalog: PortfolioCatalog = {
       },
       {
         id: "bordado-pequeno-principe",
-        title: "Colecao Pequeno Principe",
+        title: "Coleção Pequeno Príncipe",
         description:
-          "Inspiracao ludica e nostalgica com tracos cuidadosos e acabamento artesanal.",
-        imageAlt: "Bordados inspirados no Pequeno Principe",
+          "Inspiração lúdica e nostálgica, com traços cuidadosos e acabamento artesanal.",
+        imageAlt: "Bordados inspirados no Pequeno Príncipe",
         images: [
           "/portfolio/bordados/pequno-principe/bordado-pequeno-principe-1.png",
           "/portfolio/bordados/pequno-principe/bordado-pequeno-principe-2.png",
@@ -89,14 +89,14 @@ export const portfolioCatalog: PortfolioCatalog = {
     id: "amigurumis",
     label: "Amigurumis",
     summary:
-      "Amigurumis cuidadosamente modelados para encantar, com texturas confortaveis e detalhes divertidos.",
+      "Amigurumis cuidadosamente modelados para encantar, com texturas confortáveis e detalhes divertidos.",
     items: [
       {
         id: "amigurumi-lembrancinhas",
         title: "Lembrancinhas",
         description:
-          "Mini pecas para presentes afetivos e eventos especiais, com acabamento delicado.",
-        imageAlt: "Lote de amigurumis lembrancinhas artesanais",
+          "Mini peças para presentes afetivos e eventos especiais, com acabamento delicado.",
+        imageAlt: "Lote de amigurumis para lembrancinhas artesanais",
         images: [
           "/portfolio/amigurumis/lembrancinha/amigurumi-1.png",
           "/portfolio/amigurumis/lembrancinha/amigurumi-2.jpg",
@@ -110,8 +110,8 @@ export const portfolioCatalog: PortfolioCatalog = {
         id: "amigurumi-grandes",
         title: "Tamanho Grande",
         description:
-          "Pecas com maior presenca visual para decorar e criar pontos de destaque no ambiente.",
-        imageAlt: "Colecao de amigurumis grandes para decoracao",
+          "Peças com maior presença visual para decorar e criar pontos de destaque no ambiente.",
+        imageAlt: "Coleção de amigurumis grandes para decoração",
         images: [
           "/portfolio/amigurumis/grandes/amigurumi-1.png",
           "/portfolio/amigurumis/grandes/amigurumi-2.png",

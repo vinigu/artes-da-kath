@@ -34,10 +34,10 @@ export function AboutSection() {
             description="O projeto nasceu do amor pela arte manual, da vontade de criar peças únicas e de transformar sentimentos em detalhes que encantam."
           />
           <p className="text-lg leading-8 text-zinc-600">
-            A Artes da Kath surgiu do encontro entre sensibilidade e tecnica.
-            Cada encomenda e desenvolvida com escuta atenta, escolha cuidadosa
-            de materiais e acabamento minucioso para traduzir historias em
-            pecas autorais, afetuosas e cheias de personalidade.
+            A Artes da Kath surgiu do encontro entre sensibilidade e técnica.
+            Cada encomenda é desenvolvida com escuta atenta, escolha cuidadosa
+            de materiais e acabamento minucioso para traduzir histórias em peças
+            autorais, afetuosas e cheias de personalidade.
           </p>
         </div>
       </div>

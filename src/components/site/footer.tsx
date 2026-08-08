@@ -1,9 +1,12 @@
+import { shopeeStoreLink } from "@/content/portfolio";
 import Image from "next/image";
 import Link from "next/link";
 import { BsFacebook, BsInstagram, BsShop, BsWhatsapp } from "react-icons/bs";
 
 const footerLinks = [
   { href: "#portfolio", label: "Portfólio" },
+  { href: "#processo-criativo", label: "Processo" },
+  { href: "#shopee", label: "Shopee" },
   { href: "#about", label: "Sobre" },
   { href: "#contact", label: "Contato" },
 ];
@@ -25,7 +28,7 @@ const socialLinks = [
     Icon: BsFacebook,
   },
   {
-    href: "https://www.shopee.com",
+    href: shopeeStoreLink,
     label: "Shopee",
     Icon: BsShop,
   },
