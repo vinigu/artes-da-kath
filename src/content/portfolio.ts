@@ -10,12 +10,12 @@ export const highlights = [
   {
     title: "Atendimento acolhedor",
     description:
-      "A comunicação é simples, próxima e sempre voltada à sua cotação.",
+      "A comunicação é simples, próxima e sempre voltada à sua ideia.",
   },
 ] as const;
 
 export const contactWhatsAppLink =
-  "https://wa.me/5511977725980?text=Olá!%20Gostaria%20de%20fazer%20uma%20cotação%20para%20uma%20arte.";
+  "https://wa.me/5511977725980?text=Olá!%20Quero%20criar%20minha%20arte%20personalizada.";
 
 export const shopeeStoreLink =
   "https://shopee.com.br/kathprates?entryPoint=ShopBySearch&searchKeyword=artes%20da%20kath";

@@ -10,8 +10,8 @@ export function PortfolioSection() {
     >
       <SectionHeading
         eyebrow="Portfólio"
-        title="Coleções que unem técnica e personalidade"
-        description="Do bordado autoral aos amigurumis afetivos, cada peça possui um carrossel próprio para você explorar os detalhes sem sair do card."
+        title="Coleções que convidam você a sentir cada detalhe"
+        description="Do bordado autoral aos amigurumis afetivos, cada peça foi pensada para revelar textura, cuidado e personalidade antes mesmo do primeiro toque."
       />
 
       <div className="mt-12 space-y-16">

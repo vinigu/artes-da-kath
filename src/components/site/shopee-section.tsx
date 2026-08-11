@@ -20,11 +20,11 @@ export function ShopeeSection() {
           </p>
 
           <h2 className="text-3xl font-semibold tracking-tight text-[color:var(--brand-brown)] sm:text-4xl">
-            Prefere comprar peças prontas com checkout seguro?
+            Prefere levar uma peça pronta com compra segura?
           </h2>
 
           <p className="text-lg leading-8 text-zinc-700">
-            Além das encomendas personalizadas, você também pode adquirir peças
+            Além das peças personalizadas, você também pode adquirir criações
             prontas da Artes da Kath na Shopee, com pagamento protegido,
             acompanhamento do pedido e toda a praticidade da plataforma.
           </p>
