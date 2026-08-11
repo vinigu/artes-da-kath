@@ -24,13 +24,13 @@ export function ContactCTA() {
           </h2>
           <p className="text-lg leading-8 text-zinc-100">
             Entre em contato para conversar sobre uma peça personalizada, uma
-            ideia especial ou uma cotação rápida.
+            ideia especial ou um pedido feito sob medida.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <CtaButton
               href={contactWhatsAppLink}
-              label="Conversar no WhatsApp"
-              ariaLabel="Falar com a Artes da Kath no WhatsApp"
+              label="Vamos conversar"
+              ariaLabel="Vamos conversar com a Artes da Kath no WhatsApp"
             />
             <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm text-zinc-100">
               <MessageCircleMore size={16} />

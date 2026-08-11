@@ -5,6 +5,7 @@ import { BsFacebook, BsInstagram, BsShop, BsWhatsapp } from "react-icons/bs";
 
 const footerLinks = [
   { href: "#portfolio", label: "Portfólio" },
+  { href: "#ideias", label: "Ideias" },
   { href: "#processo-criativo", label: "Processo" },
   { href: "#shopee", label: "Shopee" },
   { href: "#about", label: "Sobre" },
@@ -18,7 +19,7 @@ const socialLinks = [
     Icon: BsInstagram,
   },
   {
-    href: "https://wa.me/5511977725980?text=Olá!%20Gostaria%20de%20fazer%20uma%20cotação%20para%20uma%20arte.",
+    href: "https://wa.me/5511977725980?text=Olá!%20Quero%20criar%20minha%20arte%20personalizada.",
     label: "WhatsApp",
     Icon: BsWhatsapp,
   },

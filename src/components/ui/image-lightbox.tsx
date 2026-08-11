@@ -93,6 +93,9 @@ export function ImageLightbox({
     image.onload = () => {
       preloadedImagesRef.current.add(src);
     };
+    image.onerror = () => {
+      preloadedImagesRef.current.add(src);
+    };
   }, []);
 
   const currentImage = useMemo(() => {
@@ -120,6 +123,10 @@ export function ImageLightbox({
       return;
     }
 
+    preloadImage(currentImage);
+    preloadImage(previousImage);
+    preloadImage(nextImage);
+
     if (currentImage && preloadedImagesRef.current.has(currentImage)) {
       setIsImageLoading(false);
     } else {
@@ -127,8 +134,6 @@ export function ImageLightbox({
     }
 
     transformRef.current?.resetTransform(0);
-    preloadImage(previousImage);
-    preloadImage(nextImage);
   }, [currentImage, isOpen, nextImage, preloadImage, previousImage]);
 
   if (!isOpen || typeof window === "undefined" || !document?.body) {
@@ -232,40 +237,43 @@ export function ImageLightbox({
                         preloadedImagesRef.current.add(currentImage);
                         setIsImageLoading(false);
                       }}
+                      onError={() => {
+                        setIsImageLoading(false);
+                      }}
                     />
                   </div>
                 </TransformComponent>
+
+                <div className="absolute inset-x-4 bottom-4 z-40 flex items-center justify-between gap-3 md:inset-x-6">
+                  <button
+                    type="button"
+                    onClick={showPreviousImage}
+                    disabled={totalImages <= 1}
+                    aria-label={`Imagem anterior de ${itemTitle}`}
+                    className="inline-flex h-11 items-center gap-2 rounded-full border border-white/40 bg-black/55 px-4 text-sm font-medium text-white shadow-[0_12px_35px_rgba(0,0,0,0.35)] backdrop-blur-md transition hover:bg-black/70 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <ChevronLeft size={16} />
+                    Anterior
+                  </button>
+
+                  <p className="rounded-full bg-black/55 px-4 py-2 text-xs font-semibold tracking-[0.18em] text-white/90 shadow-[0_12px_35px_rgba(0,0,0,0.35)] backdrop-blur-md">
+                    {currentIndex + 1}/{totalImages}
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={showNextImage}
+                    disabled={totalImages <= 1}
+                    aria-label={`Próxima imagem de ${itemTitle}`}
+                    className="inline-flex h-11 items-center gap-2 rounded-full border border-white/40 bg-black/55 px-4 text-sm font-medium text-white shadow-[0_12px_35px_rgba(0,0,0,0.35)] backdrop-blur-md transition hover:bg-black/70 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    Próxima
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
               </>
             )}
           </TransformWrapper>
-        </div>
-
-        <div className="mt-4 flex items-center justify-between">
-          <button
-            type="button"
-            onClick={showPreviousImage}
-            disabled={totalImages <= 1}
-            aria-label={`Imagem anterior de ${itemTitle}`}
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-white/40 px-4 text-sm font-medium text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            <ChevronLeft size={16} />
-            Anterior
-          </button>
-
-          <p className="rounded-full bg-white/12 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] text-white/90">
-            {currentIndex + 1}/{totalImages}
-          </p>
-
-          <button
-            type="button"
-            onClick={showNextImage}
-            disabled={totalImages <= 1}
-            aria-label={`Próxima imagem de ${itemTitle}`}
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-white/40 px-4 text-sm font-medium text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            Próxima
-            <ChevronRight size={16} />
-          </button>
         </div>
       </div>
     </div>,

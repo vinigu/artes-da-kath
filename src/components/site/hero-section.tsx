@@ -1,6 +1,6 @@
 import { CtaButton } from "@/components/ui/cta-button";
-import { heroFeaturedImage } from "@/content/portfolioData";
 import { contactWhatsAppLink, highlights } from "@/content/portfolio";
+import { heroFeaturedImage } from "@/content/portfolioData";
 import { HeartHandshake, Palette, Sparkles } from "lucide-react";
 import Image from "next/image";
 
@@ -17,16 +17,16 @@ export function HeroSection() {
               Peças artesanais com história, carinho e identidade.
             </h1>
             <p className="max-w-xl text-lg leading-8 text-zinc-600">
-              Cada bordado e amigurumi é criado para transformar emoção em uma
-              obra única, feita à mão com dedicação.
+              Cada bordado e amigurumi nasce para transformar emoção em uma obra
+              única, feita à mão com dedicação.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-4">
             <CtaButton
               href={contactWhatsAppLink}
-              label="Solicitar cotação"
-              ariaLabel="Solicitar uma cotação pelo WhatsApp"
+              label="Crie sua arte personalizada"
+              ariaLabel="Conversar sobre sua arte personalizada pelo WhatsApp"
             />
             <a
               href="#portfolio"

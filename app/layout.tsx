@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+const siteUrl =
+  process.env.SITE_URL ??
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  "http://localhost:3000";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -13,14 +18,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  applicationName: "Artes da Kath",
   title: {
     default: "Artes da Kath",
     template: "%s | Artes da Kath",
   },
   description:
-    "Artes da Kath: bordados e amigurumis artesanais com personalidade, carinho e identidade.",
-  keywords: ["artes da kath", "bordados", "amigurumis", "artesanato"],
+    "Artes da Kath cria bordados, amigurumis e artesanato autoral com carinho, identidade e acabamento feito à mão.",
+  keywords: [
+    "Artes da Kath",
+    "bordado",
+    "bordados",
+    "amigurumi",
+    "amigurumis",
+    "artesanato",
+    "arte personalizada",
+  ],
+  alternates: {
+    canonical: "/",
+  },
   manifest: "/icons/site.webmanifest",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/icons/favicon.ico" },
@@ -38,10 +67,19 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Artes da Kath",
+    title: "Artes da Kath | Bordados e amigurumis feitos à mão",
     description:
-      "Descubra peças artesanais únicas em bordados e amigurumis feitas com carinho.",
+      "Descubra bordados, amigurumis e peças artesanais criadas com cuidado, personalidade e acabamento exclusivo.",
     type: "website",
+    locale: "pt_BR",
+    siteName: "Artes da Kath",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Artes da Kath | Bordados e amigurumis feitos à mão",
+    description:
+      "Bordados, amigurumis e artesanato autoral com identidade, carinho e acabamento feito à mão.",
   },
 };
 
