@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: `${siteName} | Bordados e amigurumis feitos a mao`,
+    title: `${siteName} | Bordados e amigurumis feitos à mão`,
     description: defaultSeoDescription,
     url: "/",
     siteName,
