@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: `${siteName} | Bordados e amigurumis feitos a mao`,
+    title: `${siteName} | Bordados e amigurumis feitos à mão`,
     description: defaultSeoDescription,
     type: "website",
     locale: "pt_BR",
