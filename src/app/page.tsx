@@ -6,30 +6,30 @@ import { Header } from "@/components/site/header";
 import { HeroSection } from "@/components/site/hero-section";
 import { PortfolioSection } from "@/components/site/portfolio-section";
 import { ShopeeSection } from "@/components/site/shopee-section";
+import { contactWhatsAppLink } from "@/content/portfolio";
 import { heroFeaturedImage } from "@/content/portfolioData";
+import { defaultSeoDescription, siteName, toAbsoluteUrl } from "@/lib/seo";
 import type { Metadata } from "next";
 import { IdeasSection } from "../components/site/ideas-section";
 
 export const metadata: Metadata = {
   title: "Bordados e amigurumis feitos à mão",
-  description:
-    "Conheça a Artes da Kath: bordados, amigurumis e arte personalizada feitos à mão com carinho, presença e acabamento exclusivo.",
+  description: defaultSeoDescription,
   keywords: [
     "bordado personalizado",
     "amigurumi artesanal",
-    "artesanato",
+    "artesanato personalizado",
     "arte personalizada",
-    "Artes da Kath",
+    siteName,
   ],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Artes da Kath | Bordados e amigurumis feitos à mão",
-    description:
-      "Bordados, amigurumis e arte personalizada com acabamento exclusivo e identidade autoral.",
+    title: `${siteName} | Bordados e amigurumis feitos a mao`,
+    description: defaultSeoDescription,
     url: "/",
-    siteName: "Artes da Kath",
+    siteName,
     type: "website",
     images: [
       {
@@ -42,16 +42,59 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Artes da Kath | Bordados e amigurumis feitos à mão",
-    description:
-      "Bordados, amigurumis e arte personalizada com acabamento exclusivo.",
+    title: `${siteName} | Bordados e amigurumis feitos a mao`,
+    description: defaultSeoDescription,
     images: [heroFeaturedImage],
   },
+};
+
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${toAbsoluteUrl("/")}#website`,
+      url: toAbsoluteUrl("/"),
+      name: siteName,
+      inLanguage: "pt-BR",
+      description: defaultSeoDescription,
+    },
+    {
+      "@type": "Organization",
+      "@id": `${toAbsoluteUrl("/")}#organization`,
+      name: siteName,
+      url: toAbsoluteUrl("/"),
+      logo: toAbsoluteUrl("/icons/icon-512x512.png"),
+      sameAs: [contactWhatsAppLink],
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          telephone: "+55 11 97772-5980",
+          availableLanguage: ["pt-BR"],
+        },
+      ],
+    },
+    {
+      "@type": "ImageGallery",
+      "@id": `${toAbsoluteUrl("/")}#portfolio-gallery`,
+      name: "Portfolio de bordados e amigurumis",
+      url: toAbsoluteUrl("/#portfolio"),
+      about: ["Bordados", "Amigurumis", "Artesanato personalizado"],
+      image: [toAbsoluteUrl(heroFeaturedImage)],
+    },
+  ],
 };
 
 export default function Home() {
   return (
     <div id="top" className="flex min-h-screen flex-col bg-transparent">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(homeJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <Header />
       <main>
         <HeroSection />

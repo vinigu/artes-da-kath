@@ -1,17 +1,31 @@
+import { portfolioCatalog } from "@/content/portfolioData";
+import { toAbsoluteUrl } from "@/lib/seo";
 import type { MetadataRoute } from "next";
 
-const siteUrl =
-  process.env.SITE_URL ??
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "http://localhost:3000";
+function getPortfolioImages(): string[] {
+  const imageSet = new Set<string>();
+
+  for (const category of Object.values(portfolioCatalog)) {
+    for (const item of category.items) {
+      for (const image of item.images) {
+        imageSet.add(toAbsoluteUrl(image));
+      }
+    }
+  }
+
+  return [...imageSet];
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const portfolioImages = getPortfolioImages();
+
   return [
     {
-      url: new URL("/", siteUrl).toString(),
+      url: toAbsoluteUrl("/"),
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
+      images: portfolioImages,
     },
   ];
 }
