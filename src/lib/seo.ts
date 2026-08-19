@@ -24,7 +24,7 @@ export const siteUrl = normalizeSiteUrl(
 export const siteName = "Artes da Kath";
 
 export const defaultSeoDescription =
-  "Bordados e amigurumis personalizados feitos a mao com carinho, identidade e acabamento artesanal.";
+  "Bordados e amigurumis personalizados feitos à mão com carinho, identidade e acabamento artesanal.";
 
 export const defaultSeoKeywords = [
   "Artes da Kath",
