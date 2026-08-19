@@ -1,9 +1,5 @@
+import { siteUrl, toAbsoluteUrl } from "@/lib/seo";
 import type { MetadataRoute } from "next";
-
-const siteUrl =
-  process.env.SITE_URL ??
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "http://localhost:3000";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -11,9 +7,10 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        disallow: ["/api/"],
       },
     ],
-    sitemap: new URL("/sitemap.xml", siteUrl).toString(),
+    sitemap: toAbsoluteUrl("/sitemap.xml"),
     host: siteUrl,
   };
 }

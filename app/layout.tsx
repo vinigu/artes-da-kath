@@ -1,11 +1,14 @@
+import { heroFeaturedImage } from "@/content/portfolioData";
+import {
+  defaultSeoDescription,
+  defaultSeoKeywords,
+  siteName,
+  siteUrl,
+  toAbsoluteUrl,
+} from "@/lib/seo";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const siteUrl =
-  process.env.SITE_URL ??
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "http://localhost:3000";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,24 +22,21 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  applicationName: "Artes da Kath",
+  applicationName: siteName,
   title: {
-    default: "Artes da Kath",
-    template: "%s | Artes da Kath",
+    default: siteName,
+    template: `%s | ${siteName}`,
   },
-  description:
-    "Artes da Kath cria bordados, amigurumis e artesanato autoral com carinho, identidade e acabamento feito à mão.",
-  keywords: [
-    "Artes da Kath",
-    "bordado",
-    "bordados",
-    "amigurumi",
-    "amigurumis",
-    "artesanato",
-    "arte personalizada",
-  ],
+  description: defaultSeoDescription,
+  keywords: [...defaultSeoKeywords],
+  authors: [{ name: siteName }],
+  creator: siteName,
+  category: "Artesanato",
   alternates: {
     canonical: "/",
+    languages: {
+      "pt-BR": "/",
+    },
   },
   manifest: "/icons/site.webmanifest",
   robots: {
@@ -49,6 +49,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
   },
   icons: {
     icon: [
@@ -67,19 +70,26 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Artes da Kath | Bordados e amigurumis feitos à mão",
-    description:
-      "Descubra bordados, amigurumis e peças artesanais criadas com cuidado, personalidade e acabamento exclusivo.",
+    title: `${siteName} | Bordados e amigurumis feitos à mão`,
+    description: defaultSeoDescription,
     type: "website",
     locale: "pt_BR",
-    siteName: "Artes da Kath",
+    siteName,
     url: "/",
+    images: [
+      {
+        url: toAbsoluteUrl(heroFeaturedImage),
+        width: 1200,
+        height: 630,
+        alt: `${siteName} - bordados e amigurumis personalizados`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Artes da Kath | Bordados e amigurumis feitos à mão",
-    description:
-      "Bordados, amigurumis e artesanato autoral com identidade, carinho e acabamento feito à mão.",
+    title: `${siteName} | Bordados e amigurumis feitos a mao`,
+    description: defaultSeoDescription,
+    images: [toAbsoluteUrl(heroFeaturedImage)],
   },
 };
 
