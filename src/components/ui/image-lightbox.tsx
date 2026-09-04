@@ -10,7 +10,7 @@ import {
   ZoomOut,
 } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   TransformComponent,
@@ -39,8 +39,10 @@ export function ImageLightbox({
 }: ImageLightboxProps) {
   const totalImages = images.length;
   const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
-  const preloadedImagesRef = useRef<Set<string>>(new Set());
-  const [isImageLoading, setIsImageLoading] = useState(true);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [loadedImageSrc, setLoadedImageSrc] = useState<string | null>(null);
+  const [hasImageError, setHasImageError] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
@@ -79,62 +81,62 @@ export function ImageLightbox({
     };
   }, [currentIndex, isOpen, onClose, onIndexChange, totalImages]);
 
-  const preloadImage = useCallback((src: string | undefined) => {
-    if (
-      !src ||
-      preloadedImagesRef.current.has(src) ||
-      typeof window === "undefined"
-    ) {
+  useEffect(() => {
+    if (!isOpen) {
       return;
     }
 
-    const image = new window.Image();
-    image.src = src;
-    image.onload = () => {
-      preloadedImagesRef.current.add(src);
+    const previousActiveElement = document.activeElement as HTMLElement | null;
+    closeButtonRef.current?.focus();
+
+    const trapFocus = (event: KeyboardEvent) => {
+      if (event.key !== "Tab" || !dialogRef.current) {
+        return;
+      }
+
+      const focusableElements = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
     };
-    image.onerror = () => {
-      preloadedImagesRef.current.add(src);
+
+    document.addEventListener("keydown", trapFocus);
+
+    return () => {
+      document.removeEventListener("keydown", trapFocus);
+      previousActiveElement?.focus();
     };
-  }, []);
+  }, [isOpen]);
 
   const currentImage = useMemo(() => {
     return images[currentIndex] ?? images[0];
   }, [currentIndex, images]);
-
-  const previousImage = useMemo(() => {
-    if (totalImages <= 1) {
-      return undefined;
-    }
-
-    return images[currentIndex === 0 ? totalImages - 1 : currentIndex - 1];
-  }, [currentIndex, images, totalImages]);
-
-  const nextImage = useMemo(() => {
-    if (totalImages <= 1) {
-      return undefined;
-    }
-
-    return images[currentIndex === totalImages - 1 ? 0 : currentIndex + 1];
-  }, [currentIndex, images, totalImages]);
+  const isImageLoading = !hasImageError && loadedImageSrc !== currentImage;
 
   useEffect(() => {
     if (!isOpen) {
       return;
     }
 
-    preloadImage(currentImage);
-    preloadImage(previousImage);
-    preloadImage(nextImage);
-
-    if (currentImage && preloadedImagesRef.current.has(currentImage)) {
-      setIsImageLoading(false);
-    } else {
-      setIsImageLoading(true);
-    }
-
     transformRef.current?.resetTransform(0);
-  }, [currentImage, isOpen, nextImage, preloadImage, previousImage]);
+  }, [currentImage, isOpen]);
 
   if (!isOpen || typeof window === "undefined" || !document?.body) {
     return null;
@@ -150,6 +152,7 @@ export function ImageLightbox({
 
   return createPortal(
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-label={`Galeria ampliada de ${itemTitle}`}
@@ -161,6 +164,7 @@ export function ImageLightbox({
       }}
     >
       <button
+        ref={closeButtonRef}
         type="button"
         onClick={onClose}
         aria-label="Fechar galeria"
@@ -171,7 +175,7 @@ export function ImageLightbox({
 
       <div className="w-full max-w-5xl">
         <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/20 bg-black">
-          {isImageLoading ? (
+          {isImageLoading && !hasImageError ? (
             <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/45">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/55 px-4 py-2 text-sm text-white/90">
                 <LoaderCircle size={16} className="animate-spin" />
@@ -225,22 +229,42 @@ export function ImageLightbox({
                   contentClass="!w-full !h-full"
                 >
                   <div className="relative h-full w-full">
-                    <Image
-                      key={currentImage}
-                      src={currentImage}
-                      alt={`${imageAlt} (${currentIndex + 1} de ${totalImages})`}
-                      fill
-                      sizes="100vw"
-                      className="object-contain"
-                      priority={isOpen}
-                      onLoad={() => {
-                        preloadedImagesRef.current.add(currentImage);
-                        setIsImageLoading(false);
-                      }}
-                      onError={() => {
-                        setIsImageLoading(false);
-                      }}
-                    />
+                    {hasImageError ? (
+                      <div
+                        className="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center text-sm text-white"
+                        role="alert"
+                      >
+                        <p>Não foi possível carregar esta imagem.</p>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setHasImageError(false);
+                            setLoadedImageSrc(null);
+                          }}
+                          className="rounded-full border border-white/40 px-4 py-2 font-semibold transition-colors hover:bg-white/15"
+                        >
+                          Tentar novamente
+                        </button>
+                      </div>
+                    ) : (
+                      <Image
+                        key={currentImage}
+                        src={currentImage}
+                        alt={`${imageAlt} (${currentIndex + 1} de ${totalImages})`}
+                        fill
+                        sizes="100vw"
+                        className="object-contain"
+                        loading="eager"
+                        onLoad={() => {
+                          setLoadedImageSrc(currentImage);
+                          setHasImageError(false);
+                        }}
+                        onError={() => {
+                          setHasImageError(true);
+                          setLoadedImageSrc(null);
+                        }}
+                      />
+                    )}
                   </div>
                 </TransformComponent>
 

@@ -6,7 +6,6 @@ import { Header } from "@/components/site/header";
 import { HeroSection } from "@/components/site/hero-section";
 import { PortfolioSection } from "@/components/site/portfolio-section";
 import { ShopeeSection } from "@/components/site/shopee-section";
-import { contactWhatsAppLink } from "@/content/portfolio";
 import { heroFeaturedImage } from "@/content/portfolioData";
 import { defaultSeoDescription, siteName, toAbsoluteUrl } from "@/lib/seo";
 import type { Metadata } from "next";
@@ -65,7 +64,6 @@ const homeJsonLd = {
       name: siteName,
       url: toAbsoluteUrl("/"),
       logo: toAbsoluteUrl("/icons/icon-512x512.png"),
-      sameAs: [contactWhatsAppLink],
       contactPoint: [
         {
           "@type": "ContactPoint",

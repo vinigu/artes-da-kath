@@ -1,7 +1,7 @@
 import { shopeeStoreLink } from "@/content/portfolio";
 import Image from "next/image";
 import Link from "next/link";
-import { BsFacebook, BsInstagram, BsShop, BsWhatsapp } from "react-icons/bs";
+import { BsShop, BsWhatsapp } from "react-icons/bs";
 
 const footerLinks = [
   { href: "#portfolio", label: "Portfólio" },
@@ -14,19 +14,9 @@ const footerLinks = [
 
 const socialLinks = [
   {
-    href: "https://www.instagram.com",
-    label: "Instagram",
-    Icon: BsInstagram,
-  },
-  {
     href: "https://wa.me/5511977725980?text=Olá!%20Quero%20criar%20minha%20arte%20personalizada.",
     label: "WhatsApp",
     Icon: BsWhatsapp,
-  },
-  {
-    href: "https://www.facebook.com",
-    label: "Facebook",
-    Icon: BsFacebook,
   },
   {
     href: shopeeStoreLink,

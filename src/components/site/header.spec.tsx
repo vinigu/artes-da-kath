@@ -1,15 +1,23 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+/* eslint-disable @next/next/no-img-element */
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import { Header } from "./header";
 
 vi.mock("next/image", () => ({
   default: ({
-    priority: _priority,
+    priority,
     ...props
-  }: { priority?: boolean } & React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <img {...props} />
-  ),
+  }: { priority?: boolean } & React.ImgHTMLAttributes<HTMLImageElement>) => {
+    void priority;
+    return <img {...props} alt={props.alt ?? ""} />;
+  },
 }));
 
 vi.mock("next/link", () => ({
@@ -52,5 +60,30 @@ describe("Header", () => {
       expect(header).toHaveAttribute("data-scrolled", "true");
       expect(logo).toHaveAttribute("src", "/logos/logo-sem-fundo.png");
     });
+  });
+
+  it("abre o menu mobile e fecha ao escolher uma secao", () => {
+    render(<Header />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Abrir menu" }));
+
+    const mobileMenu = screen.getByRole("navigation", {
+      name: "Menu principal mobile",
+    });
+    expect(mobileMenu).toBeVisible();
+    expect(screen.getByRole("button", { name: "Fechar menu" })).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
+
+    fireEvent.click(within(mobileMenu).getByRole("link", { name: "Sobre" }));
+
+    expect(screen.getByRole("button", { name: "Abrir menu" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
+    expect(
+      screen.queryByRole("navigation", { name: "Menu principal mobile" }),
+    ).not.toBeInTheDocument();
   });
 });

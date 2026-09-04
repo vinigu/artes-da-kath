@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -5,15 +6,43 @@ import { PortfolioCard } from "./portfolio-card";
 
 vi.mock("next/image", () => ({
   default: ({
-    fill: _fill,
-    priority: _priority,
-    sizes: _sizes,
+    fill,
+    priority,
+    sizes,
     ...props
   }: {
     fill?: boolean;
     priority?: boolean;
     sizes?: string;
-  } & React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} />,
+  } & React.ImgHTMLAttributes<HTMLImageElement>) => {
+    void fill;
+    void priority;
+    void sizes;
+    return <img {...props} alt={props.alt ?? ""} />;
+  },
+}));
+
+vi.mock("react-zoom-pan-pinch", () => ({
+  TransformWrapper: ({
+    children,
+  }: {
+    children: (controls: {
+      zoomIn: () => void;
+      zoomOut: () => void;
+      resetTransform: () => void;
+    }) => React.ReactNode;
+  }) => (
+    <div>
+      {children({
+        zoomIn: () => undefined,
+        zoomOut: () => undefined,
+        resetTransform: () => undefined,
+      })}
+    </div>
+  ),
+  TransformComponent: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 describe("PortfolioCard", () => {
@@ -121,5 +150,69 @@ describe("PortfolioCard", () => {
       screen.queryByRole("status", { name: "Carregando imagem" }),
     ).not.toBeInTheDocument();
     expect(nextButton).toBeEnabled();
+  });
+
+  it("mostra uma tentativa de recuperacao quando a imagem falha", () => {
+    render(
+      <PortfolioCard
+        categoryLabel="Bordados"
+        item={{
+          id: "item-1",
+          title: "Coleção Casal",
+          description: "Descrição",
+          imageAlt: "Bordados da coleção casal",
+          images: ["/imagem-indisponivel.png"],
+        }}
+      />,
+    );
+
+    fireEvent.error(
+      screen.getByRole("img", { name: /bordados da coleção casal/i }),
+    );
+
+    expect(
+      screen.getByRole("alert", {
+        name: "",
+      }),
+    ).toHaveTextContent("Não foi possível carregar esta imagem.");
+    expect(
+      screen.getByRole("button", { name: "Tentar novamente" }),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Tentar novamente" }));
+
+    expect(
+      screen.getByRole("img", { name: /bordados da coleção casal/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("gerencia o foco e fecha a galeria com Escape", () => {
+    render(
+      <PortfolioCard
+        categoryLabel="Bordados"
+        item={{
+          id: "item-1",
+          title: "Coleção Casal",
+          description: "Descrição",
+          imageAlt: "Bordados da coleção casal",
+          images: ["/portfolio/bordados/casal/bordado-casal-1.png"],
+        }}
+      />,
+    );
+
+    const opener = screen.getByRole("button", {
+      name: /abrir galeria ampliada de coleção casal/i,
+    });
+    opener.focus();
+    fireEvent.click(opener);
+
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    const closeButton = screen.getByRole("button", { name: "Fechar galeria" });
+    expect(document.activeElement).toBe(closeButton);
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(document.activeElement).toBe(opener);
   });
 });

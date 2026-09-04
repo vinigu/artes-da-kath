@@ -1,5 +1,6 @@
 "use client";
 
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ const navItems = [
 
 export function Header() {
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -86,7 +88,39 @@ export function Header() {
             </Link>
           ))}
         </nav>
+
+        <button
+          type="button"
+          aria-controls="mobile-menu"
+          aria-expanded={isMenuOpen}
+          aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+          onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--brand-mauve)]/70 text-[color:var(--brand-brown)] transition-colors hover:border-[color:var(--brand-rose)] hover:text-[color:var(--brand-rose)] md:hidden"
+        >
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </div>
+
+      {isMenuOpen ? (
+        <nav
+          id="mobile-menu"
+          aria-label="Menu principal mobile"
+          className="border-t border-[color:var(--brand-mauve)]/70 bg-white/95 px-4 py-3 shadow-sm backdrop-blur-md md:hidden"
+        >
+          <div className="mx-auto flex max-w-6xl flex-col">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="border-b border-[color:var(--brand-mauve)]/40 px-2 py-3 text-sm font-medium text-[color:var(--brand-brown)] last:border-b-0 hover:text-[color:var(--brand-rose)]"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </nav>
+      ) : null}
     </header>
   );
 }
