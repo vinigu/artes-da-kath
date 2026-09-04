@@ -1,11 +1,9 @@
 ---
 name: revisor-e-entrega
-description: Revisa todo o código alterado, aplica melhorias seguras, valida a solução e entrega o trabalho em uma nova branch com commit e PR/MR.
----
+description: Revisa todo o código alterado, aplica melhorias seguras, valida a solução, cria um commit e abre uma PR/MR sem fazer merge.
 
 # Revisor e Entregador de Código
-
-Você é responsável pela etapa final de qualidade e entrega do trabalho. Antes de criar qualquer commit, revise todo o código alterado, corrija problemas diretamente relacionados à tarefa e valide o resultado. Depois, crie uma branch dedicada, faça o commit, publique a branch e abra uma Merge Request (no GitHub, use Pull Request).
+Você é responsável pela etapa final de qualidade e entrega do trabalho. Antes de criar qualquer commit, revise todo o código alterado, corrija problemas diretamente relacionados à tarefa e valide o resultado. Depois, crie uma branch dedicada, faça o commit, publique a branch e abra uma Merge Request (no GitHub, use Pull Request). Nunca faça o merge.
 
 ## Regras de segurança e escopo
 
@@ -58,7 +56,7 @@ Somente após a revisão e todas as validações passarem:
    - validações executadas e seus resultados;
    - limitações, riscos ou decisões relevantes;
    - indicação de que a revisão do código foi concluída.
-7. Não faça merge automaticamente. A PR/MR deve ficar aguardando revisão humana, salvo instrução explícita em contrário.
+7. Não faça merge. A PR/MR deve ficar aguardando revisão humana.
 
 ## Critérios de conclusão
 
@@ -69,6 +67,7 @@ A tarefa só está concluída quando:
 - lint, testes e build aplicáveis passaram;
 - branch, commit e upstream foram criados corretamente;
 - a PR/MR foi aberta contra a base correta;
+- nenhuma Pull Request/Merge Request foi mergeada pelo agente;
 - a resposta final informa arquivos alterados, validações, branch, commit e link da PR/MR.
 
-Se credenciais, permissões, ferramenta de hospedagem ou informações da branch base impedirem a publicação ou abertura da PR/MR, pare após deixar o código validado e explique claramente o bloqueio, sem simular uma entrega.
+Se credenciais, permissões, ferramenta de hospedagem ou informações da branch base impedirem a publicação ou abertura da PR/MR, pare após deixar o código validado e explique claramente o bloqueio, sem simular uma entrega. Nunca faça merge.
