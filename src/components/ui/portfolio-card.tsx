@@ -3,7 +3,7 @@
 import type { PortfolioItem } from "@/content/portfolioData";
 import { ChevronLeft, ChevronRight, LoaderCircle } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ImageLightbox } from "./image-lightbox";
 
 type PortfolioCardProps = {
@@ -15,42 +15,26 @@ export function PortfolioCard({ categoryLabel, item }: PortfolioCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [loadedImageSrc, setLoadedImageSrc] = useState<string | null>(null);
+  const [hasImageError, setHasImageError] = useState(false);
   const totalImages = item.images.length;
   const currentImage = item.images[currentImageIndex] ?? item.images[0];
-  const isImageLoading = loadedImageSrc !== currentImage;
+  const isImageLoading = !hasImageError && loadedImageSrc !== currentImage;
 
-  const preloadImage = (src: string | undefined) => {
-    if (typeof window === "undefined" || !src) {
-      return;
-    }
-
-    const image = new window.Image();
-    image.src = src;
+  const changeImage = (nextIndex: number) => {
+    setHasImageError(false);
+    setLoadedImageSrc(null);
+    setCurrentImageIndex(nextIndex);
   };
 
-  useEffect(() => {
-    preloadImage(currentImage);
-    preloadImage(
-      item.images[
-        currentImageIndex === 0 ? totalImages - 1 : currentImageIndex - 1
-      ],
-    );
-    preloadImage(
-      item.images[
-        currentImageIndex === totalImages - 1 ? 0 : currentImageIndex + 1
-      ],
-    );
-  }, [currentImage, currentImageIndex, item.images, totalImages]);
-
   const showPreviousImage = () => {
-    setCurrentImageIndex((previousIndex) =>
-      previousIndex === 0 ? totalImages - 1 : previousIndex - 1,
+    changeImage(
+      currentImageIndex === 0 ? totalImages - 1 : currentImageIndex - 1,
     );
   };
 
   const showNextImage = () => {
-    setCurrentImageIndex((previousIndex) =>
-      previousIndex === totalImages - 1 ? 0 : previousIndex + 1,
+    changeImage(
+      currentImageIndex === totalImages - 1 ? 0 : currentImageIndex + 1,
     );
   };
 
@@ -79,24 +63,47 @@ export function PortfolioCard({ categoryLabel, item }: PortfolioCardProps) {
               <span className="sr-only">Carregando imagem</span>
             </div>
           ) : null}
-          <Image
-            key={currentImage}
-            src={currentImage}
-            alt={item.imageAlt}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-            priority={false}
-            onLoad={() => setLoadedImageSrc(currentImage)}
-            onError={() => setLoadedImageSrc(currentImage)}
-          />
+          {hasImageError ? (
+            <div
+              className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-[color:var(--brand-cream)] p-6 text-center text-sm text-[color:var(--brand-brown)]"
+              role="alert"
+            >
+              <p>Não foi possível carregar esta imagem.</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setHasImageError(false);
+                  setLoadedImageSrc(null);
+                }}
+                className="rounded-full border border-[color:var(--brand-mauve)] px-4 py-2 font-semibold transition-colors hover:border-[color:var(--brand-rose)] hover:text-[color:var(--brand-rose)]"
+              >
+                Tentar novamente
+              </button>
+            </div>
+          ) : (
+            <Image
+              key={currentImage}
+              src={currentImage}
+              alt={item.imageAlt}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              onLoad={() => setLoadedImageSrc(currentImage)}
+              onError={() => {
+                setHasImageError(true);
+                setLoadedImageSrc(null);
+              }}
+            />
+          )}
 
-          <button
-            type="button"
-            onClick={() => setIsLightboxOpen(true)}
-            aria-label={`Abrir galeria ampliada de ${item.title}`}
-            className="absolute inset-0 z-10"
-          />
+          {!hasImageError ? (
+            <button
+              type="button"
+              onClick={() => setIsLightboxOpen(true)}
+              aria-label={`Abrir galeria ampliada de ${item.title}`}
+              className="absolute inset-0 z-10"
+            />
+          ) : null}
 
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
 
