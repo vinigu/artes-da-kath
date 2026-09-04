@@ -1,11 +1,11 @@
 ---
 name: revisor-e-entrega
-description: Revisa todo o código alterado, aplica melhorias seguras, valida a solução e cria um commit com as alterações.
+description: Revisa todo o código alterado, aplica melhorias seguras, valida a solução, cria um commit e abre uma PR/MR sem fazer merge.
 ---
 
 # Revisor e Entregador de Código
 
-Você é responsável pela etapa final de qualidade do trabalho. Antes de criar qualquer commit, revise todo o código alterado, corrija problemas diretamente relacionados à tarefa e valide o resultado. Depois, crie uma branch dedicada e faça o commit.
+Você é responsável pela etapa final de qualidade e entrega do trabalho. Antes de criar qualquer commit, revise todo o código alterado, corrija problemas diretamente relacionados à tarefa e valide o resultado. Depois, crie uma branch dedicada, faça o commit, publique a branch e abra uma Merge Request (no GitHub, use Pull Request). Nunca faça o merge.
 
 ## Regras de segurança e escopo
 
@@ -42,7 +42,7 @@ Use apenas scripts e ferramentas já existentes no repositório. Para este proje
 
 Se a mudança for visual, valide também no navegador em tamanhos desktop e mobile quando possível. Informe qualquer limitação real; não declare sucesso quando uma verificação não tiver sido executada.
 
-## Branch e commit
+## Branch, commit e Merge Request
 
 Somente após a revisão e todas as validações passarem:
 
@@ -51,7 +51,14 @@ Somente após a revisão e todas as validações passarem:
 3. Confira novamente o status e adicione apenas os arquivos pertencentes à tarefa.
 4. Crie um commit pequeno e descritivo no padrão do repositório. Inclua o trailer:
    `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>`
-5. Não publique a branch, abra Pull Requests/Merge Requests nem faça merge. Essas ações são responsabilidade do usuário.
+5. Publique a branch no remoto configurando o upstream.
+6. Abra uma Merge Request; em GitHub, isso significa abrir uma Pull Request contra a branch base. Use título objetivo e descrição com:
+   - resumo das mudanças;
+   - motivação e comportamento entregue;
+   - validações executadas e seus resultados;
+   - limitações, riscos ou decisões relevantes;
+   - indicação de que a revisão do código foi concluída.
+7. Não faça merge. A PR/MR deve ficar aguardando revisão humana.
 
 ## Critérios de conclusão
 
@@ -60,8 +67,9 @@ A tarefa só está concluída quando:
 - todo o diff relevante foi revisado;
 - melhorias necessárias foram aplicadas;
 - lint, testes e build aplicáveis passaram;
-- branch e commit foram criados corretamente;
-- nenhuma Pull Request/Merge Request foi criada ou mergeada pelo agente;
-- a resposta final informa arquivos alterados, validações, branch e commit.
+- branch, commit e upstream foram criados corretamente;
+- a PR/MR foi aberta contra a base correta;
+- nenhuma Pull Request/Merge Request foi mergeada pelo agente;
+- a resposta final informa arquivos alterados, validações, branch, commit e link da PR/MR.
 
-Se a criação da branch ou do commit não puder ser concluída, pare após deixar o código validado e explique claramente o bloqueio, sem simular uma entrega.
+Se credenciais, permissões, ferramenta de hospedagem ou informações da branch base impedirem a publicação ou abertura da PR/MR, pare após deixar o código validado e explique claramente o bloqueio, sem simular uma entrega. Nunca faça merge.
